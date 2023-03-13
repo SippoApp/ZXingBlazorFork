@@ -4,7 +4,7 @@ var id = null;
 var supportsVibrate = false;
 export function init(wrapper, element, elementid, options)
 {
-  console.log('init' + elementid + ' - Megalith Fork #1');
+  console.log('init' + elementid + ' - Megalith Fork #1 - 0.2.904');
   id = elementid;
   let selectedDeviceId;
   const sourceSelect = element.querySelector("[data-action=sourceSelect]");
@@ -53,7 +53,7 @@ export function init(wrapper, element, elementid, options)
 
         sourceSelect.onchange = () =>
         {
-          // EBS @ 13.03.2023: Added - Fork 1
+          // EBS @ 13.03.2023: Added - Fork 1 - 0.2.904
           // Store selected camera to local storage
           console.log("Storing selected camera to localstorage: " + sourceSelect.value);
           localStorage.setItem("currCamera", sourceSelect.value);
@@ -66,11 +66,11 @@ export function init(wrapper, element, elementid, options)
         sourceSelectPanel.style.display = 'block'
       }
 
-      // EBS @ 13.03.2023: Added - Fork 1
+      // EBS @ 13.03.2023: Added - Fork 1 - 0.2.904
       // Attempt to pre-select the correct camera on iOS and Android
-      if (ios || android)
+      if (isiOS())
       {
-        console.log("iOS or Android detected, attempting to select the correct camera ...");
+        console.log("iOS detected, attempting to select the correct camera ...");
 
         //Iphone has the second [1] as back camera, Android also wich is the most common to scan with
         if (videoInputDevices.length > 1) { selectedDeviceId = videoInputDevices[1].deviceId }
@@ -83,23 +83,25 @@ export function init(wrapper, element, elementid, options)
         StartScan();
       })
 
-      // EBS @ 13.03.2023: Added - Fork 1
+      // EBS @ 13.03.2023: Added - Fork 1 - 0.2.904
       // Detect if iOS
-      const ios = () =>
+      function isiOS()
       {
         if (typeof window === `undefined` || typeof navigator === `undefined`) return false;
 
         return /iPhone|iPad|iPod/i.test(navigator.userAgent || navigator.vendor || (window.opera && opera.toString() === `[object Opera]`));
       };
 
-      const android = () =>
+      function isAndroid()
       {
+        if (typeof window === `undefined` || typeof navigator === `undefined`) return false;
+
         return /(android)/i.test(navigator.userAgent);
       };
 
       function StartScan()
       {
-        // EBS @ 13.03.2023: Added - Fork 1
+        // EBS @ 13.03.2023: Added - Fork 1 - 0.2.904
         // Change to pre selected camera if that exists
         var strLocalStorageCameraSelected = localStorage.getItem("currCamera");
         if (strLocalStorageCameraSelected != undefined && strLocalStorageCameraSelected != null && strLocalStorageCameraSelected != "")
