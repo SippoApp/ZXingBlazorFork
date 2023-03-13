@@ -38,7 +38,8 @@ export function init(wrapper, element, elementid, options)
     .then((videoInputDevices) =>
     {
       selectedDeviceId = videoInputDevices[0].deviceId
-      console.log('videoInputDevices:' + videoInputDevices.length);
+      console.log('videoInputDevices:' + videoInputDevices.length);      
+      
       if (videoInputDevices.length > 1)
       {
         videoInputDevices.forEach((element) =>
@@ -65,12 +66,36 @@ export function init(wrapper, element, elementid, options)
         sourceSelectPanel.style.display = 'block'
       }
 
+      // EBS @ 13.03.2023: Added - Fork 1
+      // Attempt to pre-select the correct camera on iOS and Android
+      if (ios || android)
+      {
+        console.log("iOS or Android detected, attempting to select the correct camera ...");
+
+        //Iphone has the second [1] as back camera, Android also wich is the most common to scan with
+        if (videoInputDevices.length > 1) { selectedDeviceId = videoInputDevices[1].deviceId }
+      }
+
       StartScan();
 
       startButton.addEventListener('click', () =>
       {
         StartScan();
       })
+
+      // EBS @ 13.03.2023: Added - Fork 1
+      // Detect if iOS
+      const ios = () =>
+      {
+        if (typeof window === `undefined` || typeof navigator === `undefined`) return false;
+
+        return /iPhone|iPad|iPod/i.test(navigator.userAgent || navigator.vendor || (window.opera && opera.toString() === `[object Opera]`));
+      };
+
+      const android = () =>
+      {
+        return /(android)/i.test(navigator.userAgent);
+      };
 
       function StartScan()
       {
