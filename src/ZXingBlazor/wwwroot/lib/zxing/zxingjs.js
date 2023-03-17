@@ -108,7 +108,13 @@ export function init(wrapper, element, elementid, options)
         {
           console.log("Camera pre-selected found: " + strLocalStorageCameraSelected + " | Selecting ...");
           if (selectedDeviceId != strLocalStorageCameraSelected) selectedDeviceId = strLocalStorageCameraSelected;
-        }          
+        }
+        // EBS @ 17.03.2023: Added so an entry is added the first time without manually switching
+        else
+        {
+          console.log("No camera stored found, storing camera to localstorage: " + selectedDeviceId);
+          localStorage.setItem("currCamera", selectedDeviceId);
+        }
 
         if (options.decodeonce)
         {
