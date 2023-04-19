@@ -66,8 +66,10 @@ export function init(wrapper, element, elementid, options)
         sourceSelectPanel.style.display = 'block'
       }
 
+      // EBS @ 19.04.2023: Changed - Fork 2 - 0.2.906 - disabled iOS specific code
       // EBS @ 13.03.2023: Added - Fork 1 - 0.2.904
       // Attempt to pre-select the correct camera on iOS and Android
+      /*
       if (isiOS())
       {
         console.log("iOS detected, attempting to select the correct camera ...");
@@ -75,6 +77,7 @@ export function init(wrapper, element, elementid, options)
         //Iphone has the second [1] as back camera, Android also wich is the most common to scan with
         if (videoInputDevices.length > 1) { selectedDeviceId = videoInputDevices[1].deviceId }
       }
+      */
 
       StartScan();
 
@@ -101,10 +104,11 @@ export function init(wrapper, element, elementid, options)
 
       function StartScan()
       {
+        // EBS @ 19.04.2023: Changed - Fork 2 - 0.2.906 - extended check
         // EBS @ 13.03.2023: Added - Fork 1 - 0.2.904
         // Change to pre selected camera if that exists
         var strLocalStorageCameraSelected = localStorage.getItem("currCamera");
-        if (strLocalStorageCameraSelected != undefined && strLocalStorageCameraSelected != null && strLocalStorageCameraSelected != "")
+        if (strLocalStorageCameraSelected != undefined && strLocalStorageCameraSelected != null && strLocalStorageCameraSelected != "" && strLocalStorageCameraSelected != "undefined")
         {
           console.log("Camera pre-selected found: " + strLocalStorageCameraSelected + " | Selecting ...");
           if (selectedDeviceId != strLocalStorageCameraSelected) selectedDeviceId = strLocalStorageCameraSelected;
